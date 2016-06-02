@@ -33,6 +33,7 @@ public class NormalChatList extends Fragment {
         // Inflate the layout for this fragment
         View baseView = inflater.inflate(R.layout.fragment_normal_chat_list, container, false);
 
+        userName = DataStore.getInstance().getUserName();
         chatListRecyclerView = (RecyclerView) baseView.findViewById(R.id.chat_list_recycler_view);
         DataStore.getInstance().convertChatMessage(userName);
         chatMessageList = DataStore.getInstance().getChatMessageList();

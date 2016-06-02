@@ -20,6 +20,7 @@ public class DataStore {
 
 
     private List<ChatMessageModel> chatMessageList;
+    private String userName;
 
     private DataStore() {
         chatMessageList = new ArrayList<>();
@@ -97,7 +98,24 @@ public class DataStore {
         }
         return favMessageModels;
     }
-    
+
+
+    public boolean isUserNameContain(String text) {
+        for (ChatMessageModel chatMessageModel : chatMessageList) {
+            if (chatMessageModel.getUsername().equals(text)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 }
 
 

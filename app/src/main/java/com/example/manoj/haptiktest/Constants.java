@@ -5,4 +5,5 @@ package com.example.manoj.haptiktest;
  */
 public class Constants {
     public static final String CHAT_URL = "http://haptik.co/android/test_data/";
+    public static final String PARAM_USER_NAME = "user_name";
 }
