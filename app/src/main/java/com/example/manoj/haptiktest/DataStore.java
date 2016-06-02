@@ -97,10 +97,7 @@ public class DataStore {
         }
         return favMessageModels;
     }
-
-    public void setFav(int position, boolean state) {
-        chatMessageList.get(position).setIsFavourite(state);
-    }
+    
 }
 
 
