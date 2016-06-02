@@ -13,6 +13,8 @@ import java.util.List;
 public class ChatPagerAdapter extends FragmentStatePagerAdapter {
     private List<String> titles;
 
+    private FavChatFragment favChatFragment;
+
     public ChatPagerAdapter(FragmentManager fm) {
         super(fm);
         titles = new ArrayList<>();
@@ -25,7 +27,8 @@ public class ChatPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return new NormalChatList();
         } else {
-            return new FavChatFragment();
+            favChatFragment = new FavChatFragment();
+            return favChatFragment;
         }
     }
 
@@ -37,6 +40,13 @@ public class ChatPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return titles.size();
+    }
+
+
+    public void updateFav() {
+        if (favChatFragment != null) {
+            favChatFragment.onUpate();
+        }
     }
 
 }

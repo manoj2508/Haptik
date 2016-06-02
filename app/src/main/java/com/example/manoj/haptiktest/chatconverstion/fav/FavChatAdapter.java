@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.manoj.haptiktest.R;
-import com.example.manoj.haptiktest.models.ChatMessageModel;
+import com.example.manoj.haptiktest.models.FavMessageModel;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import java.util.List;
 public class FavChatAdapter extends RecyclerView.Adapter<FavChatAdapter.ViewHolder> {
 
 
-    private List<ChatMessageModel> dataList;
+    private List<FavMessageModel> dataList;
     private Context context;
 
-    public FavChatAdapter(Context context, List<ChatMessageModel> chatMessageList) {
+    public FavChatAdapter(Context context, List<FavMessageModel> chatMessageList) {
         this.context = context;
         this.dataList = chatMessageList;
     }
@@ -34,9 +34,10 @@ public class FavChatAdapter extends RecyclerView.Adapter<FavChatAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ChatMessageModel chatMessageModel = dataList.get(position);
-        holder.messageText.setText(chatMessageModel.getBody());
+        FavMessageModel chatMessageModel = dataList.get(position);
         holder.userNameView.setText(chatMessageModel.getName());
+        holder.totalCountView.setText("Total Msg Count : " + chatMessageModel.getTotalCount());
+        holder.favCountView.setText("Fav Msg Count : " + chatMessageModel.getFavCount());
     }
 
     @Override
@@ -44,18 +45,20 @@ public class FavChatAdapter extends RecyclerView.Adapter<FavChatAdapter.ViewHold
         return dataList.size();
     }
 
-    public void updateMessageList(List<ChatMessageModel> chatMessageList) {
+    public void updateMessageList(List<FavMessageModel> chatMessageList) {
         dataList = chatMessageList;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView userNameView;
-        private TextView messageText;
+        private TextView totalCountView;
+        private TextView favCountView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            messageText = (TextView) itemView.findViewById(R.id.message);
+            totalCountView = (TextView) itemView.findViewById(R.id.total_count);
+            favCountView = (TextView) itemView.findViewById(R.id.fav_count);
             userNameView = (TextView) itemView.findViewById(R.id.user_name);
         }
     }

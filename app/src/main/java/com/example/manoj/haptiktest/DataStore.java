@@ -1,10 +1,16 @@
 package com.example.manoj.haptiktest;
 
+import android.util.Log;
+
 import com.example.manoj.haptiktest.models.ChatMessageModel;
+import com.example.manoj.haptiktest.models.FavMessageModel;
 import com.example.manoj.haptiktest.models.MessageType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by manoj on 02/06/16.
@@ -44,14 +50,56 @@ public class DataStore {
         }
     }
 
-    public List<ChatMessageModel> getFavChatList() {
-        List<ChatMessageModel> chatMessageModels = new ArrayList<>();
+    public List<FavMessageModel> getFavChatList() {
+        List<FavMessageModel> favMessageModels = new ArrayList<>();
+
+        HashMap<String, Integer> totalCountMap = new HashMap<>();
+        HashMap<String, Integer> favCountMap = new HashMap<>();
+
         for (ChatMessageModel chatMessageModel : chatMessageList) {
+            String key = chatMessageModel.getUsername();
+            Integer preVal = totalCountMap.get(key);
+            int totalCount = 0;
+            if (preVal != null) {
+                totalCount = preVal;
+            }
+
+            totalCount++;
+            totalCountMap.put(key, totalCount);
+
+            int favCount = 0;
+            Integer favVal = favCountMap.get(key);
+            if (favVal != null) {
+                favCount = favVal;
+            }
             if (chatMessageModel.isFavourite()) {
-                chatMessageModels.add(chatMessageModel);
+                favCount++;
+                Log.d("manoj", "fav find");
+            }
+            favCountMap.put(key, favCount);
+        }
+
+        Set<String> set = new HashSet<>();
+
+        for (ChatMessageModel chatMessageModel : chatMessageList) {
+            if (chatMessageModel.getMessageType() == MessageType.FRIEND) {
+                FavMessageModel favMessageModel = new FavMessageModel();
+                favMessageModel.setName(chatMessageModel.getName());
+                favMessageModel.setUsername(chatMessageModel.getUsername());
+                favMessageModel.setTotalCount(totalCountMap.get(chatMessageModel.getUsername()));
+                favMessageModel.setFavCount(favCountMap.get(chatMessageModel.getUsername()));
+                if (!set.contains(chatMessageModel.getUsername())) {
+                    set.add(chatMessageModel.getUsername());
+                    favMessageModels.add(favMessageModel);
+                }
+
             }
         }
-        return chatMessageModels;
+        return favMessageModels;
+    }
+
+    public void setFav(int position, boolean state) {
+        chatMessageList.get(position).setIsFavourite(state);
     }
 }
 

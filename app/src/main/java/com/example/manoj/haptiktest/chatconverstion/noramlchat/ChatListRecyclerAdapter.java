@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.manoj.haptiktest.DataStore;
 import com.example.manoj.haptiktest.R;
 import com.example.manoj.haptiktest.models.ChatMessageModel;
 import com.example.manoj.haptiktest.models.MessageType;
@@ -111,6 +112,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
             int position = getAdapterPosition();
             ChatMessageModel chatMessageModel = getItem(position);
             chatMessageModel.setIsFavourite(!chatMessageModel.isFavourite());
+            DataStore.getInstance().setFav(position, chatMessageModel.isFavourite());
             notifyDataSetChanged();
         }
     }
